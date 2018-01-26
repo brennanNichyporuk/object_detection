@@ -9,7 +9,7 @@ import csv
 from inference_utils.image_utils import preprocess_image, resize_image
 
 
-IMAGE_PATH = '/Users/rogergirgis/Pictures/catti.jpg'
+IMAGE_PATH = '/absolute/path/to/ImageFile'
 
 # Image processing
 image = cv2.imread(IMAGE_PATH)
