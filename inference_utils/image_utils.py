@@ -3,7 +3,7 @@ import cv2
 import keras
 
 
-def resize_image(img, min_side=600, max_side=1024):
+def resize_image(img, min_side=600, max_side=600):
     (rows, cols, _) = img.shape
 
     smallest_side = min(rows, cols)
