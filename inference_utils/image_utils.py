@@ -28,7 +28,9 @@ def preprocess_image(x):
     # "https://github.com/fchollet/keras/blob/master/keras/applications/imagenet_utils.py"
     # except for converting RGB -> BGR since we assume BGR already
     x = x.astype(keras.backend.floatx())
-    if keras.backend.image_data_format() == 'channels_first':
+    # Compatibility change
+    #if keras.backend.image_data_format() == 'channels_first':
+    if keras.backend.image_dim_ordering() == 'th' :   
         if x.ndim == 3:
             x[0, :, :] -= 103.939
             x[1, :, :] -= 116.779

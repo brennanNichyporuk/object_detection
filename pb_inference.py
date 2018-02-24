@@ -5,11 +5,12 @@ import numpy as np
 import pickle
 import time
 import csv
+import sys
+import os
 
 from inference_utils.image_utils import preprocess_image, resize_image
 
-
-IMAGE_PATH = '/absolute/path/to/ImageFile'
+IMAGE_PATH = sys.argv[1]
 
 # Image processing
 image = cv2.imread(IMAGE_PATH)
@@ -76,7 +77,11 @@ with tf.Graph().as_default() as graph:  # Set default graph as graph
                                           float(x_pos)/float(width),
                                           float(y_pos)/float(height) ])
 
-with open('output_files/labels_list.csv', 'wb') as myfile:
+try:
+    os.remove("output_files/labels_list.csv")
+except OSError:
+    pass
+with open('output_files/labels_list.csv', 'w') as myfile:
     wr = csv.writer(myfile)
     wr.writerows(predictions_locs)
 
