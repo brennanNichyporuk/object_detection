@@ -7,6 +7,7 @@ import time
 import csv
 import sys
 import os
+import inspect
 
 from inference_utils.image_utils import preprocess_image, resize_image
 
@@ -18,11 +19,19 @@ image = preprocess_image(image)
 image, scale = resize_image(image)
 
 # Model File
-pb_file = 'model_files/object_detector.pb'
+pb_file = os.path.join(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))),'model_files/object_detector.pb')
+print(pb_file)
 
 # Label File
-with open('model_files/labels.pickle', 'rb') as handle:
+label_file = os.path.join(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))),'model_files/labels.pickle')
+print(label_file)
+with open(label_file, 'rb') as handle:
     labels = pickle.load(handle)
+
+try:
+    os.remove("output_files/labels_list.csv")
+except OSError:
+    pass
 
 start_time = time.time()
 # Reference: https://github.com/MarvinTeichmann/KittiSeg/issues/113
@@ -77,11 +86,9 @@ with tf.Graph().as_default() as graph:  # Set default graph as graph
                                           float(x_pos)/float(width),
                                           float(y_pos)/float(height) ])
 
-try:
-    os.remove("output_files/labels_list.csv")
-except OSError:
-    pass
-with open('output_files/labels_list.csv', 'w') as myfile:
+
+output_files = os.path.join(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))),'output_files/labels_list.csv')
+with open(output_files, 'w') as myfile:
     wr = csv.writer(myfile)
     wr.writerows(predictions_locs)
 
