@@ -15,4 +15,4 @@ the variable 'IMAGE_PATH' to point to the absolute path of your test image.
 
 # Output of Inference
 The code is setup to output a csv file containing all the labels of the objects in the image
-and the corresponding x and y position. The x and y positions are in the form of ratios of width and height.
+and the corresponding x1, y1, x2 and y2 position. The xi and yi positions are in the form of ratios of width and height of the image. Point (0,0) corresponds to the top-left corner of the image.
