@@ -80,11 +80,12 @@ with tf.Graph().as_default() as graph:  # Set default graph as graph
                 if score < 0.3:
                     continue
                 b = detections[0, idx, :4].astype(int)
-                x_pos = b[0] + (b[2] - b[0]) / 2
-                y_pos = b[1] + (b[3] - b[1]) / 2
-                predictions_locs.append([ labels[label],
-                                          float(x_pos)/float(width),
-                                          float(y_pos)/float(height) ])
+                predictions_locs.append([labels[label],
+                                         float(b[0]) / float(width),  # x1
+                                         float(b[1]) / float(height),  # y1
+                                         float(b[2]) / float(width),  # x2
+                                         float(b[3]) / float(height),  # y2
+                                         ])
 
 
 output_files = os.path.join(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))),'output_files/labels_list.csv')
